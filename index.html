@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+  div {
+      padding: 25px 25px 25px 25px;
+  }
+
+  .links line {
+    stroke: #999;
+    stroke-opacity: 0;
+  }
+
+  circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+
+  text {
+    font-family: Arial, sans-serif;
+    color: black;
+    display: inline;
+  }
+
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 0.5;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: white;
+    border: 2px solid lightsteelblue;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
+</style>
+
+<body>
+  <br />
+  <div>
+    <button type="button" class="w3-button w3-white w3-border filter-btn" id="Race" value="race">Color by Race</button>
+    <button type="button" class="w3-button w3-white w3-border filter-btn" id="Gender" value="gender">Color by Gender</button>
+  </div>
+  <div>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" value="1735">1735</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1736">1736</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1737">1737</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1738">1738</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1739">1739</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1740">1740</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1741">1741</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1742">1742</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1743">1743</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1744">1744</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1745">1745</button>
+    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1746">1746</button>
+  </div>
+
+    <!--
+    <select id="selected-year">
+      <option selected value="1734">1734</option>
+      <option value="1735">1735</option>
+      <option value="1736">1736</option>
+      <option value="1737">1737</option>
+      <option value="1738">1738</option>
+      <option value="1739">1739</option>
+      <option value="1740">1740</option>
+      <option value="1741">1741</option>
+      <option value="1742">1742</option>
+      <option value="1743">1743</option>
+      <option value="1744">1744</option>
+    </select>
+  -->
+  </div>
+</select>
+
+  <script>
+    var width = 1200,
+      height = 500;
+
+    // variable to store button coloring
+    var colorCategory = ['race'];
+
+    // filter based on gender or color
+    $(".filter-btn").click(function(){
+      colorCategory = $(this).val();
+      updateNodeColor()
+    });
+
+    var selectedYear = 1734;
+    $(".selected-year").click(function(){
+      selectedYear = $(this).val();
+      console.log(selectedYear);
+      showLinkLines();
+    });
+
+    // preallocate linkedbyindex
+    let linkedByIndex = {};
+
+    // build the svg for the viz
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 " + width + " " + height)
+      .call(d3.zoom().on("zoom", function() {
+        svg.attr("transform", d3.event.transform)
+      }))
+      .on("dblclick.zoom", null)
+      .append("g")
+
+    // set color scale
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // use force simulation
+    var simulation = d3.forceSimulation()
+      .force("collide", d3.forceCollide().radius(15))
+      .force("link", d3.forceLink().id(function(d) {
+        return d.name;
+      }).strength(0.5))
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(width / 2, height / 2));
+
+    // Define the div for the tooltip
+    var div = d3.select("body").append("div")
+      .attr("class", "tooltip");
+
+    var toggle = 0;
+
+    // load the data, pass in error, graph variables
+    d3.json("force-revised.json", function(error, graph) {
+      if (error) throw error;
+
+      var link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(graph.links)
+        .enter().append("line");
+      //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+      var node = svg.selectAll("circle")
+        .data(graph.nodes)
+        .enter().append("circle")
+        .attr("r", 5)
+        .attr("fill", function(d) {
+          return color(d[colorCategory]);
+        })
+        .on("mouseover", function(d) {
+          div.html("<p>Name: " + d.name + "</p><p>Race: " + d.race + "</p><p>Gender: " + d.gender)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px")
+            .style("opacity", 1);
+        })
+        .on("mouseout", function(d) {
+          div.transition()
+            .duration(50) // duration is critical for mouse over.. if a user is moving the mouse fast the tooltip is not responsive
+            .style("opacity", 0);
+        })
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended))
+        .on('dblclick', connectedNodes);
+
+      var text = svg.selectAll("text")
+        .data(node)
+        .enter()
+        .append("text");
+
+      var labels = text
+        .attr("x", function(d) {
+          return d.cx
+        })
+        .attr("y", function(d) {
+          return d.cy
+        })
+        .text(function(d) {
+          return "( " + d.cx + ", " + d.cy + " )"
+        })
+
+      simulation
+        .nodes(graph.nodes)
+        .on("tick", ticked);
+
+      simulation.force("link")
+        .links(graph.links);
+
+      function ticked() {
+        link
+          .attr("x1", function(d) {
+            return d.source.x;
+          })
+          .attr("y1", function(d) {
+            return d.source.y;
+          })
+          .attr("x2", function(d) {
+            return d.target.x;
+          })
+          .attr("y2", function(d) {
+            return d.target.y;
+          });
+
+        node
+          .attr("cx", function(d) {
+            return d.x;
+          })
+          .attr("cy", function(d) {
+            return d.y;
+          });
+      }
+
+      // mouse double click highlight is taken from this example:
+      // http://www.coppelia.io/2014/06/finding-neighbours-in-a-d3-force-directed-layout-2/
+
+      // we need to create an array of "connections" for quick lookup
+      var linkedByIndex = {};
+      for (i = 0; i < graph.nodes.length; i++) {
+          linkedByIndex[i + "," + i] = 1;
+      };
+
+      // Loop over each "link" and determine if they are connectioned
+      graph.links.forEach(function (d) {
+          linkedByIndex[d.source.index + "," + d.target.index] = 1;
+      });
+
+      // define a "lookup" function to get connections
+      function neighboring(a, b) {
+          return linkedByIndex[a.index + "," + b.index];
+      };
+
+      links = d3.selectAll('line');
+      // set opacity based on connections
+      function connectedNodes() {
+          if (toggle == 0) {
+              // select the nodes
+              d = d3.select(this).node().__data__;
+              // loop over each node and style
+              node.style("opacity", function (o) {
+                  // ? is a conditional operator of the form condition ? value-if-true : value-if-false
+                  return neighboring(d, o) | neighboring(o, d) ? 1 : 0.15;
+              });
+
+              toggle = 1;
+          } else {
+              node.style("opacity", 1);;
+              toggle = 0;
+          }
+      };
+    });
+
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    };
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    };
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    };
+
+    /* ------------ Update Node Color --------------*/
+    // function to get all nodes, and change the color. Follow the general update pattern
+    // https://bl.ocks.org/mbostock/3808218
+    function updateNodeColor(){
+      var allCircles = svg.selectAll('circle')
+
+      // loop over each node, and update color attribute
+      allCircles.attr("fill", function(d,i){
+        return color(d[colorCategory])
+      });
+      allCircles.exit().remove()
+    };
+
+    function showLinkLines(){
+      var filterId = [];
+
+      var allLines = svg.selectAll('line');
+      var allNodes = svg.selectAll('circle');
+
+      // loop over each node, and update color attribute
+      allLines.style("stroke-opacity", function(d,i){
+        return d.year <= parseInt(selectedYear) ? 0.7 : 0
+      });
+      allLines.exit().remove()
+
+      allNodes.style('opacity',function(d,i){
+        return (d.year <= parseInt(selectedYear))? 1 : 0
+      });
+      allNodes.exit().remove()
+    };
+
+  </script>
+</body>
+
+</html>
