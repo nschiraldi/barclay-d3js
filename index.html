@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://raw.githubusercontent.com/susielu/d3-legend/master/d3-legend.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
   div {
-      padding: 25px 25px 25px 25px;
+      padding: 5px;
   }
-
   .links line {
     stroke: #999;
     stroke-opacity: 1;
   }
-
   circle {
     stroke: #fff;
     stroke-width: 1.5px;
   }
-
   text {
     font-family: Arial, sans-serif;
     color: black;
     display: inline;
   }
-
   div.tooltip {
     position: absolute;
     text-align: center;
@@ -38,8 +35,7 @@
     border-radius: 8px;
     pointer-events: none;
   }
-
-  .button {
+/*  .button {
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -49,24 +45,31 @@
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-  }
+  }*/
+  
 </style>
 
 <body>
   <br />
-  <div>
-    <label for="filter">Color nodes by: </label>
-    <select id="filter">
-      <option selected value="race">Race</option>
-      <option value="gender">Gender</option>
-      <option value="clan">Clan</option>
-      <option value="modularity_class">Modularity Class</option>
-      <option value="role">Role</option>
-    </select>
+  <div id="navigation">
+    <div id="filters">
+      <div>
+        <label for="filter">Color nodes by: </label>
+        <select id="filter">
+          <option selected value="race">Race</option>
+          <option value="gender">Gender</option>
+          <option value="clan">Clan</option>
+          <option value="modularity_class">Modularity Class</option>
+          <option value="role">Role</option>
+        </select>
+      </div>
+      
+      <label for="selected-year">Year: </label><input type="range" name="year" class="slider" id="selected-year" value="1734" min="1734" max="1746" >
+      <span  class="slider_label"></span>
+    </div>
+    
+    <div id="legend"></div>
   </div>
-  
-  <label for="selected-year">Year: </label><input type="range" name="year" class="slider" id="selected-year" value="1734" min="1734" max="1746" >
-  <span  class="slider_label"></span>
 <!--  <div>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" value="1735">1735</button>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1736">1736</button>
@@ -105,7 +108,6 @@
       
     //slider start year
     var selectedYear = 1734;
-
     $("#selected-year").change(function(){
       selectedYear = $(this).val();
       showLinkLines();
@@ -119,26 +121,25 @@
           var value = $(this).prev().attr('value');
           $(this).html(value);
         }); 
-
+    
     // variable to store button coloring
     var colorCategory = ['race'];
-
+    
     // filter based on gender or color
     $("#filter").change(function(){
       colorCategory = $(this).val();
       updateNodeColor()
     });
-
     var selectedYear = 1734;
     $(".selected-year").click(function(){
       selectedYear = $(this).val();
       console.log(selectedYear);
       showLinkLines();
     });
-
+    
     // preallocate linkedbyindex
     let linkedByIndex = {};
-
+    
     // build the svg for the viz
     var svg = d3.select("body")
       .append("svg")
@@ -148,11 +149,27 @@
         svg.attr("transform", d3.event.transform)
       }))
       .on("dblclick.zoom", null)
-      .append("g")
-
-    // set color scale
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
+      .append("g");
+    
+    //set color scale
+    //how to update legend to reflect changing labels on color select?
+    var color = d3.scaleOrdinal()
+      .domain(["Native", "White", "Black", "Unknown", "e"])
+      .range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "rgb(234, 118, 47)"]);
+    
+    var legend = d3.select("svg");
+    
+    legend.append("g")
+      .attr("class", "legendOrdinal")
+      .attr("transform", "translate(20,20)");
+    
+    var legendOrdinal = d3.legendColor()
+      .shapePadding(10)
+      .scale(color);
+    
+    legend.select(".legendOrdinal")
+      .call(legendOrdinal);
+    
     // use force simulation
     var simulation = d3.forceSimulation()
       .force("collide", d3.forceCollide().radius(15))
@@ -161,24 +178,21 @@
       }).strength(1))
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2));
-
+    
     // Define the div for the tooltip
     var div = d3.select("body").append("div")
       .attr("class", "tooltip");
-
     var toggle = 0;
-
+    
     // load the data, pass in error, graph variables
     d3.json("force-revised.json", function(error, graph) {
       if (error) throw error;
-
       var link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(graph.links)
         .enter().append("line");
       //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
-
       var node = svg.selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
@@ -202,12 +216,10 @@
           .on("drag", dragged)
           .on("end", dragended))
         .on('dblclick', connectedNodes);
-
       var text = svg.selectAll("text")
         .data(node)
         .enter()
         .append("text");
-
       var labels = text
         .attr("x", function(d) {
           return d.cx
@@ -218,14 +230,11 @@
         .text(function(d) {
           return "( " + d.cx + ", " + d.cy + " )"
         })
-
       simulation
         .nodes(graph.nodes)
         .on("tick", ticked);
-
       simulation.force("link")
         .links(graph.links);
-
       function ticked() {
         link
           .attr("x1", function(d) {
@@ -240,7 +249,6 @@
           .attr("y2", function(d) {
             return d.target.y;
           });
-
         node
           .attr("cx", function(d) {
             return d.x;
@@ -249,27 +257,26 @@
             return d.y;
           });
       }
-
+      
       // mouse double click highlight is taken from this example:
       // http://www.coppelia.io/2014/06/finding-neighbours-in-a-d3-force-directed-layout-2/
-
       // we need to create an array of "connections" for quick lookup
       var linkedByIndex = {};
       for (i = 0; i < graph.nodes.length; i++) {
           linkedByIndex[i + "," + i] = 1;
       };
-
+      
       // Loop over each "link" and determine if they are connectioned
       graph.links.forEach(function (d) {
           linkedByIndex[d.source.index + "," + d.target.index] = 1;
       });
-
+      
       // define a "lookup" function to get connections
       function neighboring(a, b) {
           return linkedByIndex[a.index + "," + b.index];
       };
-
       links = d3.selectAll('line');
+      
       // set opacity based on connections
       function connectedNodes() {
           if (toggle == 0) {
@@ -280,7 +287,6 @@
                   // ? is a conditional operator of the form condition ? value-if-true : value-if-false
                   return neighboring(d, o) | neighboring(o, d) ? 1 : 0.15;
               });
-
               toggle = 1;
           } else {
               node.style("opacity", 1);;
@@ -288,55 +294,47 @@
           }
       };
     });
-
     function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     };
-
     function dragged(d) {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     };
-
     function dragended(d) {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
     };
-
+    
     /* ------------ Update Node Color --------------*/
     // function to get all nodes, and change the color. Follow the general update pattern
     // https://bl.ocks.org/mbostock/3808218
     function updateNodeColor(){
       var allCircles = svg.selectAll('circle')
-
+      
       // loop over each node, and update color attribute
       allCircles.attr("fill", function(d,i){
         return color(d[colorCategory])
       });
       allCircles.exit().remove()
     };
-
     function showLinkLines(){
       var filterId = [];
-
       var allLines = svg.selectAll('line');
       var allNodes = svg.selectAll('circle');
-
       // loop over each node, and update color attribute
       allLines.style("stroke-opacity", function(d,i){
         return d.year <= parseInt(selectedYear) ? 0.7 : 0
       });
       allLines.exit().remove()
-
       allNodes.style('opacity',function(d,i){
         return (d.year <= parseInt(selectedYear))? 1 : 0
       });
       allNodes.exit().remove()
     };
-
   </script>
 </body>
 
