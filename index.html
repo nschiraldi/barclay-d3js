@@ -10,7 +10,7 @@
 
   .links line {
     stroke: #999;
-    stroke-opacity: 0;
+    stroke-opacity: 1;
   }
 
   circle {
@@ -55,10 +55,19 @@
 <body>
   <br />
   <div>
-    <button type="button" class="w3-button w3-white w3-border filter-btn" id="Race" value="race">Color by Race</button>
-    <button type="button" class="w3-button w3-white w3-border filter-btn" id="Gender" value="gender">Color by Gender</button>
+    <label for="filter">Color nodes by: </label>
+    <select id="filter">
+      <option selected value="race">Race</option>
+      <option value="gender">Gender</option>
+      <option value="clan">Clan</option>
+      <option value="modularity_class">Modularity Class</option>
+      <option value="role">Role</option>
+    </select>
   </div>
-  <div>
+  
+  <label for="selected-year">Year: </label><input type="range" name="year" class="slider" id="selected-year" value="1734" min="1734" max="1746" >
+  <span  class="slider_label"></span>
+<!--  <div>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" value="1735">1735</button>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1736">1736</button>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1737">1737</button>
@@ -71,7 +80,7 @@
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1744">1744</button>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1745">1745</button>
     <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1746">1746</button>
-  </div>
+  </div>-->
 
     <!--
     <select id="selected-year">
@@ -88,18 +97,34 @@
       <option value="1744">1744</option>
     </select>
   -->
-  </div>
 </select>
 
   <script>
     var width = 1200,
       height = 500;
+      
+    //slider start year
+    var selectedYear = 1734;
+
+    $("#selected-year").change(function(){
+      selectedYear = $(this).val();
+      showLinkLines();
+    });
+    
+    // label year slider
+    $('.slider').on('input change', function(){
+          $(this).next($('.slider_label')).html(this.value);
+        });
+      $('.slider_label').each(function(){
+          var value = $(this).prev().attr('value');
+          $(this).html(value);
+        }); 
 
     // variable to store button coloring
     var colorCategory = ['race'];
 
     // filter based on gender or color
-    $(".filter-btn").click(function(){
+    $("#filter").change(function(){
       colorCategory = $(this).val();
       updateNodeColor()
     });
@@ -126,14 +151,14 @@
       .append("g")
 
     // set color scale
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     // use force simulation
     var simulation = d3.forceSimulation()
       .force("collide", d3.forceCollide().radius(15))
       .force("link", d3.forceLink().id(function(d) {
         return d.name;
-      }).strength(0.5))
+      }).strength(1))
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2));
 
