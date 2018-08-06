@@ -171,7 +171,14 @@
     //how to update legend to reflect changing labels on color select?
     var color = d3.scaleOrdinal()
       .domain(["Native", "White", "Black", "Unknown", "etc"])
-      .range([ "rgb(0,0,0)", "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "#FF7700", "#FF0033", "#AADD22"]);
+      .range(["#ea5f5f",
+"#ffb14e",
+"#fff200",
+"#75fa7a",
+"#009b7b",
+"#2c15b2",
+"#9d02d7",
+"#000000"]);
     
     var legend = d3.select("svg");
     
