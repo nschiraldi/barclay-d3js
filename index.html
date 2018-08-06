@@ -155,7 +155,7 @@
     //how to update legend to reflect changing labels on color select?
     var color = d3.scaleOrdinal()
       .domain(["Native", "White", "Black", "Unknown", "e"])
-      .range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "rgb(234, 118, 47)"]);
+      .range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "#FF7700", "#FF0033", "#AADD22"]);
     
     var legend = d3.select("svg");
     
@@ -172,7 +172,7 @@
     
     // use force simulation
     var simulation = d3.forceSimulation()
-      .force("collide", d3.forceCollide().radius(15))
+      .force("collide", d3.forceCollide().radius(function(d) { return d.betweenesscentrality / 2000 + 15; }))
       .force("link", d3.forceLink().id(function(d) {
         return d.name;
       }).strength(1))
@@ -196,7 +196,7 @@
       var node = svg.selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
-        .attr("r", 5)
+        .attr("r", function(d) { return d.betweenesscentrality / 2000 + 5; })
         .attr("fill", function(d) {
           return color(d[colorCategory]);
         })
@@ -321,6 +321,7 @@
       });
       allCircles.exit().remove()
     };
+    
     function showLinkLines(){
       var filterId = [];
       var allLines = svg.selectAll('line');
