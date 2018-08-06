@@ -13,8 +13,8 @@
     stroke-opacity: 1;
   }
   circle {
-    stroke: #fff;
-    stroke-width: 1.5px;
+    /*stroke: #fff;*/
+    stroke-width: 3px;
   }
   text {
     font-family: Arial, sans-serif;
@@ -54,8 +54,17 @@
   <div id="navigation">
     <div id="filters">
       <div>
-        <label for="filter">Color nodes by: </label>
-        <select id="filter">
+        <label for="filter-fill">Color individuals by: </label>
+        <select id="filter-fill">
+          <option selected value="race">Race</option>
+          <option value="gender">Gender</option>
+          <option value="clan">Clan</option>
+          <option value="modularity_class">Modularity Class</option>
+          <option value="role">Role</option>
+        </select>
+        
+        <label for="filter-stroke">Color individual outlines by: </label>
+        <select id="filter-stroke">
           <option selected value="race">Race</option>
           <option value="gender">Gender</option>
           <option value="clan">Clan</option>
@@ -123,13 +132,20 @@
         }); 
     
     // variable to store button coloring
-    var colorCategory = ['race'];
+    var colorFillCategory = ['race'];
+    var colorStrokeCategory = ['race'];
     
     // filter based on gender or color
-    $("#filter").change(function(){
-      colorCategory = $(this).val();
+    $("#filter-fill").change(function(){
+      colorFillCategory = $(this).val();
       updateNodeColor()
     });
+    
+    $("#filter-stroke").change(function(){
+      colorStrokeCategory = $(this).val();
+      updateNodeOutline()
+    });
+    
     var selectedYear = 1734;
     $(".selected-year").click(function(){
       selectedYear = $(this).val();
@@ -154,8 +170,8 @@
     //set color scale
     //how to update legend to reflect changing labels on color select?
     var color = d3.scaleOrdinal()
-      .domain(["Native", "White", "Black", "Unknown", "e"])
-      .range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "#FF7700", "#FF0033", "#AADD22"]);
+      .domain(["Native", "White", "Black", "Unknown", "etc"])
+      .range([ "rgb(0,0,0)", "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "#FF7700", "#FF0033", "#AADD22"]);
     
     var legend = d3.select("svg");
     
@@ -198,7 +214,10 @@
         .enter().append("circle")
         .attr("r", function(d) { return d.betweenesscentrality / 2000 + 5; })
         .attr("fill", function(d) {
-          return color(d[colorCategory]);
+          return color(d[colorFillCategory]);
+        })
+        .attr("stroke", function(d) {
+          return color(d[colorStrokeCategory]);
         })
         .on("mouseover", function(d) {
           div.html("<p>Name: " + d.name + "</p><p>Race: " + d.race + "</p><p>Gender: " + d.gender)
@@ -317,7 +336,17 @@
       
       // loop over each node, and update color attribute
       allCircles.attr("fill", function(d,i){
-        return color(d[colorCategory])
+        return color(d[colorFillCategory])
+      });
+      allCircles.exit().remove()
+    };
+    
+    function updateNodeOutline(){
+      var allCircles = svg.selectAll('circle')
+      
+      // loop over each node, and update color attribute
+      allCircles.attr("stroke", function(d,i){
+        return color(d[colorStrokeCategory])
       });
       allCircles.exit().remove()
     };
