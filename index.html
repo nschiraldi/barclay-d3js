@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://raw.githubusercontent.com/susielu/d3-legend/master/d3-legend.min.js"></script>
+<script src="https://rawgit.com/susielu/d3-legend/master/d3-legend.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
 <style>
   div {
       padding: 5px;
@@ -21,7 +23,8 @@
     color: black;
     display: inline;
   }
-  div.tooltip {
+  
+  .tooltip {
     position: absolute;
     text-align: center;
     text-transform: capitalize;
@@ -31,86 +34,63 @@
     padding: 5px;
     font: 12px sans-serif;
     background: white;
-    border: 2px solid lightsteelblue;
-    border-radius: 8px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
     pointer-events: none;
   }
-/*  .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-  }*/
+  
+  svg {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin: 10px;
+  }
   
 </style>
 
 <body>
-  <br />
-  <div id="navigation">
-    <div id="filters">
-      <div>
-        <label for="filter-fill">Color individuals by: </label>
-        <select id="filter-fill">
-          <option selected value="race">Race</option>
-          <option value="gender">Gender</option>
-          <option value="clan">Clan</option>
-          <option value="modularity_class">Modularity Class</option>
-          <option value="role">Role</option>
-        </select>
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <h2 class="display">All One People and Under One King</h2>
+      <h3>Maeve Kane, University at Albany SUNY | <a href="twitter.com/maevekane">@MaeveKane</a></h3>
+      <hr>
+      <h5 class="muted">Presented for the William and Mary Quarterly Digital Research in Early America Forum at University of California Irvine, October 11-12 2018. Special thanks to Nick Schiraldi of UAlbany’s Academic and Research Computing Center.</h5>
+      <button type="button" class="btn btn-primary">Tour</button>
+    </div>
+    <div id="navigation">
+      <div id="filters">
+        <div class="form-group row">
+          <div class="col">
+            <label for="filter-fill">Color individuals by: </label>
+            <select id="filter-fill" class="form-control">
+              <option selected value="race">Race</option>
+              <option value="gender">Gender</option>
+              <option value="clan">Clan</option>
+              <option value="modularity_class">Modularity Class</option>
+              <option value="role">Role</option>
+            </select>
+          </div>
+          
+          <div class="col">
+            <label for="filter-stroke">Color individual outlines by: </label>
+            <select id="filter-stroke" class="form-control">
+              <option selected value="race">Race</option>
+              <option value="gender">Gender</option>
+              <option value="clan">Clan</option>
+              <option value="modularity_class">Modularity Class</option>
+              <option value="role">Role</option>
+            </select>
+          </div>
+        </div>
         
-        <label for="filter-stroke">Color individual outlines by: </label>
-        <select id="filter-stroke">
-          <option selected value="race">Race</option>
-          <option value="gender">Gender</option>
-          <option value="clan">Clan</option>
-          <option value="modularity_class">Modularity Class</option>
-          <option value="role">Role</option>
-        </select>
+        <div class="form-group">
+        <label for="selected-year">Year: </label><input type="range" name="year" class="slider form-control" id="selected-year" value="1734" min="1734" max="1746" >
+        <span class="slider_label h5"></span>
+        </div>
       </div>
       
-      <label for="selected-year">Year: </label><input type="range" name="year" class="slider" id="selected-year" value="1734" min="1734" max="1746" >
-      <span  class="slider_label"></span>
+      <div id="legend"></div>
     </div>
-    
-    <div id="legend"></div>
-  </div>
-<!--  <div>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" value="1735">1735</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1736">1736</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1737">1737</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1738">1738</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1739">1739</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1740">1740</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1741">1741</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1742">1742</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1743">1743</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1744">1744</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1745">1745</button>
-    <button type="button" class="w3-button w3-tiny w3-border selected-year" id="selected-year" value="1746">1746</button>
-  </div>-->
-
-    <!--
-    <select id="selected-year">
-      <option selected value="1734">1734</option>
-      <option value="1735">1735</option>
-      <option value="1736">1736</option>
-      <option value="1737">1737</option>
-      <option value="1738">1738</option>
-      <option value="1739">1739</option>
-      <option value="1740">1740</option>
-      <option value="1741">1741</option>
-      <option value="1742">1742</option>
-      <option value="1743">1743</option>
-      <option value="1744">1744</option>
-    </select>
-  -->
-</select>
-
+</div>
   <script>
     var width = 1200,
       height = 500;
@@ -170,7 +150,7 @@
     //set color scale
     //how to update legend to reflect changing labels on color select?
     var color = d3.scaleOrdinal()
-      .domain(["Native", "White", "Black", "Unknown", "etc"])
+      .domain(["Native", "White", "Black", "Unknown", "Male", "Female", "Wolf", "Turtle", "Bear"])
       .range(["#ea5f5f",
 "#ffb14e",
 "#fff200",
@@ -178,7 +158,8 @@
 "#009b7b",
 "#2c15b2",
 "#9d02d7",
-"#000000"]);
+"#000000",
+"#9a9a9a"]);
     
     var legend = d3.select("svg");
     
@@ -227,7 +208,7 @@
           return color(d[colorStrokeCategory]);
         })
         .on("mouseover", function(d) {
-          div.html("<p>Name: " + d.name + "</p><p>Race: " + d.race + "</p><p>Gender: " + d.gender + "</p><p>Clan: " + d.clan)
+          div.html("<h6>" + d.name + "</h6><strong>Race:</strong> " + d.race + "</br><strong>Gender:</strong> " + d.gender + "</br><strong>Clan:</strong> " + d.clan + "</br><strong>First appeared as:</strong> " + d.role + "</br><strong>Subcommunity:</strong> " + d.modularity_class)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px")
             .style("opacity", 1);
