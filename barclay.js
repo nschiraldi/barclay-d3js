@@ -60,19 +60,27 @@ var parentDiv = document.getElementById("viz");
       
     //domains for updating the legend    
     var raceDomain = ["Native", "White", "Black", "Unknown"];
-    var genderDomain = ["Male", "Female"];
-    var clanDomain = ["Wolf", "Turtle", "Bear", "Wolf or Bear", "Turtle or Wolf", "Bear or Turtle", "Unknown or NA"];
-    var modularityDomain = ["Canasteje-Oseragighte", "Kaghtereni-Uttijagaroondi", "Kenderago", "Bridge", "English", "Dutch-English", "Scots-Irish", "Palatine", "NA"];
+    var genderDomain = ["Male", "Female", "Unknown"];
+    var clanDomain = ["Wolf", "Turtle", "Bear", "Wolf or Bear", "Turtle or Wolf", "Bear or Turtle", "Mahican", "Unknown or NA"];
+    var modularityDomain = ["Canasteje-Oseragighte", "Kaghtereni-Uttijagaroondi", "Kenderago-Canostens", "Bridge", "English", "Dutch-English", "Scots-Irish", "Palatine", "NA"];
     var roleDomain = ["Baptized", "Parent", "Sponsor"];
     var legendDomain = raceDomain;
     var fillLegend = ['race'];
     var strokeLegend = ['race'];
+    var allDomains = raceDomain.concat(genderDomain).concat(clanDomain).concat(modularityDomain).concat(roleDomain);
     
     //set color scale
-    //how to update legend to reflect changing labels on color select?
     var color = d3.scaleOrdinal()
-      .domain(legendDomain)
-      .range(["#ea5f5f", "#ffb14e", "#fff200", "#75fa7a", "#009b7b", "#2c15b2", "#9d02d7", "#000000", "#9a9a9a"]);
+      .domain(allDomains)
+      .range(["rgb(234,95,95)",
+"rgb(58,32,154)",
+"rgb(255,177,78)",
+"rgb(255,242,0)",
+"rgb(117,250,122)",
+"rgb(0,155,123)",
+"rgb(140,62,174)",
+"rgb(154,154,154)",
+"rgb(0,0,0)"]);
     
     var legend = d3.select("svg");
     
@@ -83,10 +91,20 @@ var parentDiv = document.getElementById("viz");
     
     var legendOrdinal = d3.legendColor()
       .shapePadding(10)
+      .cellFilter(function(d){
+        var filterOut = $(allDomains).not(legendDomain).get();
+        console.log(filterOut);
+        return !filterOut.includes(d.label)
+        })
       .scale(color);
     
     legend.select(".legendOrdinal")
       .call(legendOrdinal);
+      
+    function redrawLegend() {
+      svg.selectAll(".legendOrdinal").remove();
+      legend.select(".legendOrdinal").call(legendOrdinal);
+    }
     
     // use force simulation
     var simulation = d3.forceSimulation()
@@ -291,10 +309,7 @@ var parentDiv = document.getElementById("viz");
       allCircles.exit().remove()
       
       //update legend
-      var selection = legend.select(".legendOrdinal");
-      console.log(selection);
-      selection.exit().remove();
-      legend.select(".legendOrdinal").call(legendOrdinal);
+      redrawLegend();
     };
     
     function updateNodeOutline(){
@@ -302,15 +317,12 @@ var parentDiv = document.getElementById("viz");
       
       // loop over each node, and update color attribute
       allCircles.attr("stroke", function(d,i){
-        return color(d[colorStrokeCategory])
+        return color(d[colorStrokeCategory]);
       });
       allCircles.exit().remove()
       
       //update legend
-      var selection = legend.select(".legendOrdinal");
-      console.log(selection);
-      selection.exit().remove();
-      legend.select(".legendOrdinal").call(legendOrdinal);
+      redrawLegend();
     };
     
     function showLinkLines(){
