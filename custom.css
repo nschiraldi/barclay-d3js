@@ -1,0 +1,70 @@
+.links line {
+    stroke: #999;
+    stroke-opacity: 1;
+  }
+  circle {
+    /*stroke: #fff;*/
+    stroke-width: 3px;
+  }
+/*  text {
+    font-family: Arial, sans-serif;
+    color: black;
+    display: inline;
+  }*/
+  
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 0.5;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    pointer-events: none;
+  }
+  
+  #viz, #text {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+/*    max-height: 750px;*/
+    height: 90vh;
+  }
+  
+  #text {
+    overflow-y: scroll;
+    /*padding: 10px;*/
+    counter-reset: footnotes;
+  }
+  
+  a[aria-describedby="footnote-label"] {
+    counter-increment: footnotes; /* 1 */
+    text-decoration: none; /* 2 */
+    color: inherit; /* 2 */
+    cursor: default; /* 2 */
+    outline: none; /* 2 */
+  }
+  
+  a[aria-describedby="footnote-label"]::after {
+    content: '[' counter(footnotes) ']'; /* 1 */
+    vertical-align: super; /* 2 */
+    font-size: 0.8em; /* 3 */
+    margin-left: 2px; /* 4 */
+    color: blue; /* 5 */
+    text-decoration: underline; /* 5 */
+    cursor: pointer; /* 5 */
+  }
+  
+  a[aria-describedby="footnote-label"]:focus::after {
+    outline: thin dotted;
+    outline-offset: 2px;
+  }
+  
+  footnotes :target {
+    background-color: #fcedd2;
+    border: 1px solid #fbe5c0;
+    border-radius: 5px;
+  }
