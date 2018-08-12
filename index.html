@@ -8,83 +8,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
-
-<style>
-/*  div {
-      padding: 5px;
-  }*/
-  .links line {
-    stroke: #999;
-    stroke-opacity: 1;
-  }
-  circle {
-    /*stroke: #fff;*/
-    stroke-width: 3px;
-  }
-/*  text {
-    font-family: Arial, sans-serif;
-    color: black;
-    display: inline;
-  }*/
-  
-  .tooltip {
-    position: absolute;
-    text-align: center;
-    text-transform: capitalize;
-    line-height: 0.5;
-    width: auto;
-    height: auto;
-    padding: 5px;
-    font: 12px sans-serif;
-    background: white;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    pointer-events: none;
-  }
-  
-  #viz, #text {
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-/*    max-height: 750px;*/
-    height: 90vh;
-  }
-  
-  #text {
-    overflow-y: scroll;
-    /*padding: 10px;*/
-    counter-reset: footnotes;
-  }
-  
-  a[aria-describedby="footnote-label"] {
-    counter-increment: footnotes; /* 1 */
-    text-decoration: none; /* 2 */
-    color: inherit; /* 2 */
-    cursor: default; /* 2 */
-    outline: none; /* 2 */
-  }
-  
-  a[aria-describedby="footnote-label"]::after {
-    content: '[' counter(footnotes) ']'; /* 1 */
-    vertical-align: super; /* 2 */
-    font-size: 0.8em; /* 3 */
-    margin-left: 2px; /* 4 */
-    color: blue; /* 5 */
-    text-decoration: underline; /* 5 */
-    cursor: pointer; /* 5 */
-  }
-  
-  a[aria-describedby="footnote-label"]:focus::after {
-    outline: thin dotted;
-    outline-offset: 2px;
-  }
-  
-  footnotes :target {
-    background-color: #fcedd2;
-    border: 1px solid #fbe5c0;
-    border-radius: 5px;
-  }
-  
-</style>
+<link rel="stylesheet" href="custom.css">
 
 <body>
   <div class="container-fluid">
@@ -95,9 +19,9 @@
     
     <div id="navigation">
       <div id="filters">
-        <div class="form-group row">
+        <div class="form-group form-row">
+          <div class="col-1"><label for="filter-fill"><strong>Color individuals by:</strong></label></div>
           <div class="col">
-            <label for="filter-fill">Color individuals by: </label>
             <select id="filter-fill" class="form-control">
               <option selected value="race">Race</option>
               <option value="gender">Gender</option>
@@ -107,8 +31,8 @@
             </select>
           </div>
           
+          <div class="col-1"><label for="filter-stroke"><strong>Color individual outlines by:</strong></label></div>
           <div class="col">
-            <label for="filter-stroke">Color individual outlines by: </label>
             <select id="filter-stroke" class="form-control">
               <option selected value="race">Race</option>
               <option value="gender">Gender</option>
