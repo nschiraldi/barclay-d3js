@@ -12,9 +12,10 @@
 
 <body>
   <div class="container-fluid">
+    <br>
     <div class="jumbotron">
-      <h2 class="display">All One People and Under One King</h2>
-      <h3>Maeve Kane, University at Albany SUNY | <a href="twitter.com/maevekane">@MaeveKane</a></h3> 
+      <h2 class="display-4">All One People and Under One King</h2>
+      <h3><a href="https://maevekane.net">Maeve Kane</a>, University at Albany SUNY | <a href="twitter.com/maevekane">@MaeveKane</a></h3> 
     </div>
     
     <div id="navigation">
@@ -41,6 +42,14 @@
               <option value="role">Role</option>
             </select>
           </div>
+          
+          <div class="col-1"><label for="node-size"><strong>Size individuals by:</strong></label></div>
+          <div class="col">
+            <select id="node-size" class="form-control">
+              <option selected value="betweenness">Network influence</option>
+              <option value="degree">Number of connections</option>
+            </select>
+          </div>
         </div>
         
         <div class="form-group">
@@ -49,11 +58,22 @@
         </div>
       </div>
       
-      
       <div class="row">
         <div class="col-sm-8 ml-3 mr-2 p-0" id="viz"></div>
-        <div class="col ml-2 mr-3 py-2" id="text"><p>The 1711 construction of Queen Anne’s Chapel in Fort Hunter was intended to serve many goals for the Iroquois and New York colonial leaders who requested it, the British metropolitan officials who funded it, and the Iroquois and settler congregants who attended it.  Peter Schuyler, mayor of Albany, and the 'Four Indian Kings' (actually three young Mohawks and a Mahican without real authority) traveled to London in 1710 to more firmly tie British imperial interests to the defense of New York and Native communities against French <a aria-describedby="footnote-label" href="#incursion">incursion.</a>  Queen Anne funded the construction of a fort and a chapel within its walls, hoping to build on previously spotty Dutch and Anglican conversion efforts among the Mohawk and prevent further Catholic conversions by French <a aria-describedby="footnote-label" href="#jesuits">Jesuits.</a>  For the Anglican Mohawks at Tionondoroge and the nearby Dutch, English, Scots, Irish and Palatine German settlers and enslaved Africans who attended service and baptized their children at Queen Anne’s Chapel, the spiritual community both bound their entangled communities together and reinforced ethnic and racial distinctions within this mixed congregation.</p><p>The communities surrounding Fort Hunter which attended service and baptized their children at Queen Anne’s Chapel were mixed and varied.  The Mohawk community of Tionondoroge, where most of the Iroquois Fort Hunter congregants lived, had a long history of mixed material culture in which European goods were used and reworked to fit indigenous contexts, as well as a hybrid practice of Christianity which blended indigenous, Catholic, and Protestant <a aria-describedby="footnote-label" href="#elements">elements.</a>  As a result of a long-disputed land purchase, Dutch and English residents of Albany settled near Fort Hunter and brought enslaved Africans with <a aria-describedby="footnote-label" href="#them">them.</a> In addition to these groups, in 1710 New York governor Robert Hunter sponsored the settlement of thousands of Palatine German refugees in the pine barrens of the Mohawk and Hudson Valleys in a scheme to make naval stores for the Royal Navy and provide refuge for Protestants displaced by war in <a aria-describedby="footnote-label" href="#europe">Europe.</a>  When the pitch scheme turned sour, delegations of Palatines established friendly relations with Schoharie Valley Mohawks and settled instead on fertile farmland along Schoharie Creek, angering Dutch and English elites in Albany and Governor Hunter, all of whom had begun speculating on the land along Schoharie Creek despite Mohawk <a aria-describedby="footnote-label" href="#objections">objections.</a>  By 1753, the Palatines and Schoharie Valley Mohawks petitioned the New York governor together to make an allowance for the Palatines to remain on the land they had settled, “for we are on[e] church and we will not part.  We are grown up together and we intend to live our lifetime together as <a aria-describedby="footnote-label" href="#brothers">Brothers.”</a>  After 1718, Ulster Scots and Protestant Irish filtered into the area as well, including William Johnson, who arrived in 1738 to administer land his uncle had bought in the area.6  In addition, some Mahicans moved into the area seeking agricultural work with European landowners or as indentured servants.7  In this mixed landscape, people from two Native nations with very different relations to colonialism, European ethnic groups at odds with one another, and enslaved Africans all attended church and had their children baptized at Queen Anne's Chapel.  The network of relations documented by these baptisms made visible the ways in which ethnic and racial boundaries were made, maintained, and occasionally crossed.</p></div>
-        
+        <div class="col ml-2 mr-3 py-2" id="text">
+          <h4>Introduction</h4>
+          <p>The 1711 construction of Queen Anne’s Chapel in Fort Hunter was intended to serve many goals for the Iroquois and New York colonial leaders who requested it, the British metropolitan officials who funded it, and the Iroquois and settler congregants who attended it.  Peter Schuyler, mayor of Albany, and the 'Four Indian Kings' (actually three young Mohawks and a Mahican without real authority) traveled to London in 1710 to more firmly tie British imperial interests to the defense of New York and Native communities against French <a aria-describedby="footnote-label" href="#incursion">incursion.</a>  Queen Anne funded the construction of a fort and a chapel within its walls, hoping to build on previously spotty Dutch and Anglican conversion efforts among the Mohawk and prevent further Catholic conversions by French <a aria-describedby="footnote-label" href="#jesuits">Jesuits.</a>  For the Anglican Mohawks at Tionondoroge and the nearby Dutch, English, Scots, Irish and Palatine German settlers and enslaved Africans who attended service and baptized their children at Queen Anne’s Chapel, the spiritual community both bound their entangled communities together and reinforced ethnic and racial distinctions within this mixed congregation.</p>
+        <figure class="figure">
+          <img src="map.png" class="figure-img img-fluid rounded">
+          <figcaption class="figure-caption">The Six Nations and nearby settler colonies, circa 1735.  Map by the author, after Jordan 2008: 5.</figcaption>
+        </figure>
+        <p>The communities surrounding Fort Hunter which attended service and baptized their children at Queen Anne’s Chapel were mixed and varied.  The Mohawk community of Tionondoroge, where most of the Iroquois Fort Hunter congregants lived, had a long history of mixed material culture in which European goods were used and reworked to fit indigenous contexts, as well as a hybrid practice of Christianity which blended indigenous, Catholic, and Protestant <a aria-describedby="footnote-label" href="#elements">elements.</a>  As a result of a long-disputed land purchase, Dutch and English residents of Albany settled near Fort Hunter and brought enslaved Africans with <a aria-describedby="footnote-label" href="#them">them.</a> In addition to these groups, in 1710 New York governor Robert Hunter sponsored the settlement of thousands of Palatine German refugees in the pine barrens of the Mohawk and Hudson Valleys in a scheme to make naval stores for the Royal Navy and provide refuge for Protestants displaced by war in <a aria-describedby="footnote-label" href="#europe">Europe.</a>  When the pitch scheme turned sour, delegations of Palatines established friendly relations with Schoharie Valley Mohawks and settled instead on fertile farmland along Schoharie Creek, angering Dutch and English elites in Albany and Governor Hunter, all of whom had begun speculating on the land along Schoharie Creek despite Mohawk <a aria-describedby="footnote-label" href="#objections">objections.</a>  By 1753, the Palatines and Schoharie Valley Mohawks petitioned the New York governor together to make an allowance for the Palatines to remain on the land they had settled, “for we are on[e] church and we will not part.  We are grown up together and we intend to live our lifetime together as <a aria-describedby="footnote-label" href="#brothers">Brothers.”</a>  After 1718, Ulster Scots and Protestant Irish filtered into the area as well, including William Johnson, who arrived in 1738 to administer land his uncle had bought in the area.6  In addition, some Mahicans moved into the area seeking agricultural work with European landowners or as indentured servants.7  In this mixed landscape, people from two Native nations with very different relations to colonialism, European ethnic groups at odds with one another, and enslaved Africans all attended church and had their children baptized at Queen Anne's Chapel.  The network of relations documented by these baptisms made visible the ways in which ethnic and racial boundaries were made, maintained, and occasionally crossed.</p>
+        <figure class="figure">
+          <img src="map.png" class="figure-img img-fluid rounded">
+          <figcaption class="figure-caption">The Mohawk and Schoharie Vallies, circa 1735.  Map by the author.</figcaption>
+        </figure>
+        </div>
+      
       </div>
     </div>
   <div class="row"><div class="col">
