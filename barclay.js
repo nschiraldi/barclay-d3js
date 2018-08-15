@@ -1,4 +1,4 @@
-var parentDiv = document.getElementById("viz");
+    var parentDiv = document.getElementById("viz");
     //var width = 800;
     //var height = 650;
     var width = parentDiv.clientWidth;
@@ -146,6 +146,7 @@ var parentDiv = document.getElementById("viz");
       var node = svg.selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
+        .attr("id", function(d) { return d.name})
         .attr("r", function(d) { return d.betweenesscentrality/3000 + 5; })
         .attr("fill", function(d) {
           return color(d[colorFillCategory]);
@@ -312,7 +313,7 @@ var parentDiv = document.getElementById("viz");
     function updateNodeSize(){
       var allCircles = svg.selectAll('circle')
       // loop over each node, and update color attribute
-      allCircles.attr("r", function(d) {
+      allCircles.transition().duration(300).attr("r", function(d) {
         if (nodeSize == 'betweenness') {
           nodeSizeValue = d.betweenesscentrality/3000 + 5
         } else {
@@ -331,7 +332,7 @@ var parentDiv = document.getElementById("viz");
       var allCircles = svg.selectAll('circle')
       
       // loop over each node, and update color attribute
-      allCircles.attr("fill", function(d,i){
+      allCircles.transition().duration(300).attr("fill", function(d,i){
         return color(d[colorFillCategory])
       });
       allCircles.exit().remove()
@@ -344,7 +345,7 @@ var parentDiv = document.getElementById("viz");
       var allCircles = svg.selectAll('circle')
       
       // loop over each node, and update color attribute
-      allCircles.attr("stroke", function(d,i){
+      allCircles.transition().duration(300).attr("stroke", function(d,i){
         return color(d[colorStrokeCategory]);
       });
       allCircles.exit().remove()
