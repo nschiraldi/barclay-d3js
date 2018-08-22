@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>All One People | Maeve Kane</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="d3-legend.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="bootswatch.css">
+<link rel="stylesheet" href="custom.css">
+
+<body>
+          <div class="container-fluid" id="essay">
+            <div id="viz-block-2" class="viz-block col-12" role="img" aria-label="[title]">
+              <title>Network visualization with all options enabled.</title>
+              <div class="form-row">
+                <div class="col"><label for="filter-fill-2"><strong>Color individuals by:</strong></label></div>
+                <div class="col"><label for="filter-stroke-2"><strong>Color individual outlines by:</strong></label></div>
+                <div class="col"><label for="node-size-2"><strong>Size individuals by:</strong></label></div>
+              </div>
+              <div class="form-group form-row">
+                <div class="col">
+                  <select id="filter-fill-2" class="form-control">
+                    <option selected value="race">Race</option>
+                    <option value="gender">Gender</option>
+                    <option value="clan">Clan</option>
+                    <option value="modularity_class">Subcommunity</option>
+                    <option value="role">Role</option>
+                  </select>
+                </div>
+                
+                <div class="col">
+                  <select id="filter-stroke-2" class="form-control">
+                    <option selected value="race">Race</option>
+                    <option value="gender">Gender</option>
+                    <option value="clan">Clan</option>
+                    <option value="modularity_class">Subcommunity</option>
+                    <option value="role">Role</option>
+                  </select>
+                </div>
+              
+                <div class="col">
+                  <select id="node-size-2" class="form-control">
+                    <option selected value="betweenness">Network influence</option>
+                    <option value="degree">Number of connections</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+              <label for="selected-year-2">Year: </label><input type="range" name="year" class="slider form-control" id="selected-year-2" value="1745" min="1734" max="1745" >
+              <span class="slider_label-2 h5"></span>
+              </div>
+            
+              <div class="viz" id="viz-2"></div>  
+            </div>
+    </div>
+  <script src="barclay-2.js"></script>
+</body>
+</html>
