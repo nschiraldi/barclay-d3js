@@ -4,7 +4,7 @@
   }
   circle {
     /*stroke: #fff;*/
-    stroke-width: 3px;
+    stroke-width: 5px;
   }
 /*  text {
     font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
     display: inline;
   }*/
   
-  .tooltip {
+  .tooltip-1, .tooltip-2 {
     position: absolute;
     text-align: center;
     text-transform: capitalize;
@@ -27,44 +27,112 @@
     pointer-events: none;
   }
   
-  #viz, #text {
+  img {
+    border: 1px solid lightgrey;
+  }
+  
+  .viz-block, .viz {
     border: 1px solid lightgrey;
     border-radius: 5px;
+  }
+  
+  .viz-block {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .viz {
 /*    max-height: 750px;*/
     height: 90vh;
   }
   
-  #text {
-    overflow-y: scroll;
-    /*padding: 10px;*/
-    counter-reset: footnotes;
-  }
-  
-  a[aria-describedby="footnote-label"] {
-    counter-increment: footnotes; /* 1 */
-    text-decoration: none; /* 2 */
-    color: inherit; /* 2 */
-    cursor: default; /* 2 */
-    outline: none; /* 2 */
-  }
-  
-  a[aria-describedby="footnote-label"]::after {
-    content: '[' counter(footnotes) ']'; /* 1 */
-    vertical-align: super; /* 2 */
-    font-size: 0.8em; /* 3 */
-    margin-left: 2px; /* 4 */
-    color: blue; /* 5 */
-    text-decoration: underline; /* 5 */
-    cursor: pointer; /* 5 */
-  }
-  
-  a[aria-describedby="footnote-label"]:focus::after {
-    outline: thin dotted;
-    outline-offset: 2px;
+  @media only screen and (max-width: 600px) {
+    .viz-block, .viz {
+      padding: 0px;
+      border-left: 0px;
+      border-right: 0px;
+    }
+    
+    .viz {
+      height: 80vh;
+    }
+    
+    .container {
+      width: 100% !important;
+      padding-right:0;
+      padding-left:0;
+      margin-right:auto;
+      margin-left:auto;
+    }
   }
   
   footnotes :target {
     background-color: #fcedd2;
-    border: 1px solid #fbe5c0;
+    animation: fade 3s forwards;
     border-radius: 5px;
+  }
+  
+  footnotes li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  
+  @keyframes fade {
+    from {background-color:#fcedd2;}
+    to {background-color:rgba(242, 245, 169, 0);}
+  }
+  
+  #essay {
+    counter-reset: sidenote-counter;
+  }
+  
+  .sidenote, .marginnote { float: right;
+                         clear: right;
+                         font-size: 0.9rem;
+                         margin-right: -35%;
+                         width: 30%;
+                         margin-top: 0;
+                         margin-bottom: 5px;
+                         vertical-align: baseline;
+                         position: relative;
+                         padding-bottom: 2px;
+                         border-bottom: 1px solid lightgrey;
+                         }
+
+  .sidenote-number { counter-increment: sidenote-counter; }
+  
+  .sidenote-number:after, .sidenote:before { position: relative;
+                                             vertical-align: baseline; }
+  
+  .sidenote-number:after { content: counter(sidenote-counter);
+                           font-size: 0.75rem;
+                           font-weight: 800;
+                           top: -0.5rem;
+                           left: 0.1rem; }
+  
+  .sidenote:before { content: counter(sidenote-counter) " ";
+                     font-size: 0.9rem;
+                     font-weight: 600;
+                     /*top: -0.5rem;*/ }
+                     
+  label.sidenote-number { display: inline; }
+  
+  input.margin-toggle { display: none; }
+  
+  @media (max-width: 760px) { label.margin-toggle:not(.sidenote-number) { display: inline; }
+                              .sidenote, .marginnote { display: none; }
+                              .margin-toggle:checked + .sidenote,
+                              .margin-toggle:checked + .marginnote { display: block;
+                                                                     float: left;
+                                                                     left: 1rem;
+                                                                     clear: both;
+                                                                     width: 95%;
+                                                                     margin: 1rem 2.5%;
+                                                                     vertical-align: baseline;
+                                                                     position: relative; }
+                              label { cursor: pointer; }
+                            }
+  
+  p {
+    font-size: 1.2rem;
   }
