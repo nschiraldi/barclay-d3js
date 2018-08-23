@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -43,7 +44,7 @@
             <div class="col"><label for="filter-fill-1"><strong>Color individuals by:</strong></label></div>
             <div class="col"><label for="node-size-1"><strong>Size individuals by:</strong></label></div>
           </div>
-      
+
           <div class="form-row">
             <div class="col">
               <select id="filter-fill-1" class="form-control" data-step="2" data-intro="To start, individuals are colored by their race, but you can recolor them by other attributes like their gender, clan membership, role in the network, or the subcommunity they belong to.">
@@ -54,7 +55,7 @@
                 <option value="role">Role</option>
               </select>
             </div>
-            
+
             <div class="col">
             <select id="node-size-1" class="form-control" data-step="3" data-intro="Nodes can be resized according to their influence in the network or by the number of connections to others.  Node size will change over time as more nodes enter the network.">
               <option selected value="betweenness">Network influence</option>
@@ -62,7 +63,7 @@
             </select>
           </div>
           </div>
-          
+
 <!--          <div class="col-1"><label for="filter-stroke-1"><strong>Color individual outlines by:</strong></label></div>
           <div class="col">
             <select id="filter-stroke-1" class="form-control" data-step="2" data-intro="This is step two, recoloring outlines of nodes.">
@@ -75,15 +76,15 @@
           </div>-->
 
         </div>
-        
+
         <div class="form-group">
         <label for="selected-year-1">Year: </label><input type="range" name="year" class="slider form-control" data-step="4" data-intro="By default, the network shows all connections from the fully documented years of this baptismal network between 1734-1746.  Adjust the slider to select a year and the network will display all connections made to that point in time.  Moving the slider will cause the size of individuals in the network to change, reflecting their changing influence in the network as time advances." id="selected-year-1" value="1745" min="1734" max="1745" >
         <span class="slider_label-1 h5"></span>
         </div>
-      
-        <div class="viz" data-step="1" data-intro="Each dot here represents a person, and the lines between them represent a connection made as part of a baptismal sponsorship, with connections made between the baptized child, parents, and the godparents and baptismal sponsors.  Hover over an individual to see their name, gender, race, clan, and role in the network.  You can move a person by clicking and dragging them. Doubleclick to highlight all the people an individual is connected to, and doubleclick on a different individual to clear your selection.  To see different parts of the network, scroll to zoom or click and drag on white space to pan around the network." data-position="right-bottom-aligned" id="viz-1"></div>  
+
+        <div class="viz" data-step="1" data-intro="Each dot here represents a person, and the lines between them represent a connection made as part of a baptismal sponsorship, with connections made between the baptized child, parents, and the godparents and baptismal sponsors.  Hover over an individual to see their name, gender, race, clan, and role in the network.  You can move a person by clicking and dragging them. Doubleclick to highlight all the people an individual is connected to, and doubleclick on a different individual to clear your selection.  To see different parts of the network, scroll to zoom or click and drag on white space to pan around the network." data-position="right-bottom-aligned" id="viz-1"></div>
       </div>
-      
+
       <div class="">
           <div class="essay-block col-sm-12 col-md-10">
             <h4>Fort Hunter & Queen Anne's Chapel</h4>
@@ -105,7 +106,7 @@
             <h4>All One People</h4>
             <p id="p4">In this mixed landscape, people from two Native nations with very different relations to settler communities, European ethnic groups at odds with one another, and enslaved Africans all attended church and had their children baptized at Queen Anne's Chapel.  The network of relations documented by these baptisms made visible the ways in which ethnic and racial boundaries were made, maintained, and occasionally crossed.  The prominence of a Dutch woman as an intercultural go-between, as well as Iroquois women's roles as connectors in the context of baptismal sponsorships suggests that in Iroquoia, women played a role in defining the social borders of their communities in ways elided by the model of male intercultural brokers or Native women's fur trade intermarriages.<label for="fn13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn13" class="margin-toggle"><span class="sidenote">Sleeper-Smith; Mitchell; Morrissey, "Kaskaskia Social Network."  For an examination of the importance of nation, ethnicity, and indigenous political power to Native women's intermarriage, see DuVal.  For one case of a female diplomatic broker in eighteenth century Iroquoia, see Parmenter, "Isabel Montour"; and Hirsch. <a class="badge badge-secondary" href="#fullnote-13">full note</a></span>  Unlike the creation of marital kinship ties as in the Great Lakes and midcontinent, these fictive kinship ties of godparentage within the context of Anglican baptism mirrored Iroquois creation of fictive kinship ties through adoption and diplomatic metaphors<label for="fn14" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn14" class="margin-toggle"><span class="sidenote">Seeman; Macdougall, 31-32; Fur; Merritt, "Cultural Encounters"; Merritt, At the Crossroads, 51-59 passim. <a class="badge badge-secondary" href="#fullnote-14">full note</a></span> on the scale of the household rather than the nation.</p>
             <p id="p5">	The ethnic and national boundaries within the Fort Hunter congregation are most visible in a modularity analysis of the network.  Modularity identifies subcommunities within a network which have dense connections within the subcommunity and more sparse connections outside the subcommunity.<label for="fn15" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn15" class="margin-toggle"><span class="sidenote">Because of the small size of this network, modularity was run in Gephi at resolution 2.  Weingart, "Networks Demystified"; Newman, "Modularity and Community Structure in Networks." <a class="badge badge-secondary" href="#fullnote-15">full note</a></span>  In the Fort Hunter network, modularity analysis detected three subcommunities in the Iroquois portion of the network, four subcommunities in the settler portion, and one mixed Native-settler subcommunity which bridged the larger Iroquois and settler portions of the network.  The largest division within the congregation as a whole was between the Iroquois and settler portions of the network, bridged only one settler family and a few Iroquois families, but even within those two halves of the congregation, divisions of ethnicity and affinity existed.</p>
-          
+
           <div class="col-sm-12 col-md-10">
             <table class="table">
               <caption>The number of individuals in subcommunities do not add up to the network total because small unconnected clusters in the baptismal register were included in the total count.</caption>
@@ -151,7 +152,7 @@
               </tbody>
             </table>
           </div><span class="sidenote">The average degree for the large "giant component" of the network was also 5.9.</span>
-          
+
             <p id="p6">In the settler portion of the congregation, the largest and densest subcommunity was comprised of intermarried English and Dutch congregants.  In this subcommunity, individuals had a much higher average degree than individuals in other subcommunities, or in the network as a whole.<label for="fn17" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn17" class="margin-toggle"><span class="sidenote">The median degree for the entire network was 4.  The Dutch-English subcommunity average was 7.3 and the median was 5.</span>  Degree measures the number of connections an individual has to others, in this case, the number of others they were connected to by a baptism.  The density of connections in the Dutch-English subcommunity reflected ethnic differences in the practice of baptismal sponsorship.  Historically, Dutch families in New Netherland named very few baptismal sponsors or godparents, reflecting the relatively lower emphasis on godparents as spiritual educators in the Dutch Reformed Church.<label for="fn18" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn18" class="margin-toggle"><span class="sidenote">Tebbenhoff, 567-585; Middleton, "Order and Authority in New Netherland." <a class="badge badge-secondary" href="#fullnote-18">full note</a></span>  The Fort Hunter register suggests that as these Dutch families intermarried with newer English arrivals, English practices of godparentage became more prevalent.<label for="fn19" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn19" class="margin-toggle"><span class="sidenote">Lynch, Christianizing Kinship; Hanawalt, The Ties that Bound; Moore, "English and Dutch Intermarriages"; Records of the Reformed Dutch Church of New Amsterdam, 1: 10–27. <a class="badge badge-secondary" href="#fullnote-19">full note</a></span>  Even after the English takeover of New York, seventeenth century Dutch families had previously only named two sponsors, often the child’s grandparents.  By the 1730s, children in the Dutch-English subcommunity of the Fort Hunter congregation had as many as two godparents and four baptismal sponsors or witnesses, creating ties between as many as six adults at a time and contributing to the density of connections in this subcommunity.  The English subcommunity, which included William Johnson, his common law wife Catherine Weisenberg,<label for="fn20" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn20" class="margin-toggle"><span class="sidenote">O'Toole, 45-47.</span> and other British officers and their wives, had a lower density than the intermarried Dutch-English subcommunity.<label for="fn21" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn21" class="margin-toggle"><span class="sidenote">The distinction between the Dutch-English and English subcommunities is not a firm one and is much less stable than the distinctions between other subcommunities.  At many modularities, the Dutch-English and English subcommunities were collapsed into one modularity class, and at other resolutions was fractured into several modularity classes.  The other subcommunities discussed here were more firm in their boundaries across different resolutions.</span>  The distinction between these two subcommunities reflects distinction between the English affiliated closely with the British colonial infrastructure and those who intermarried with the existing Dutch population.</p>
             <p id="p7">The density of connections in other subcommunities reflects the extent of their integration with the Dutch-English subcommunities and their assimilation to Anglican baptismal practice.  European settlers in New York felt a "protestant responsibility" to offer and accept baptism from other denominations when their own ministers were distant or rarely visited far-flung communities.<label for="fn22" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn22" class="margin-toggle"><span class="sidenote">Lindmark, 7–31.</span>
   Barclay administered baptism to children of Europeans in the area who did not necessarily consider themselves Anglican even if they attended service and had their children baptized at Fort Hunter.  Palatine settlers especially guarded their religious separatism from the Church of England even during their refuge in England before emigration to New York, intermarrying primarily among themselves into the nineteenth century.<label for="fn23" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn23" class="margin-toggle"><span class="sidenote">Otterness, 145; Roeber, 14.</span>  The Palatine subcommunity at Fort Hunter had a much lower degree of internal connection than either the Dutch-English or Scots-Irish subcommunities, reflecting both their own baptismal practices of having only a few sponsors, and their separatism from the Dutch-English subcommunities.  The Scots-Irish subcommunity, on the other hand, had a more typical degree of internal connections similar to the two bridging communities and the Iroquois subcommunities, but had few connections to the wider network.  The baptismal sponsorship practices of the Scots-Irish subcommunity aligned more closely with the Dutch-English subcommunity, and yet only a few individuals connected the two.</p>
@@ -172,7 +173,7 @@
             <p id="p16">The two Iroquois subcommunities with direct connection to the Bridge community, the Canasteje-Oseragighte and Kaghtereni-Uttijagaroondi subcommunities, were mainly composed of individuals from the Turtle and Bear clans.  The Kaghtereni-Uttijagaroondi subcommunity also included a small cluster Wolf clan members, but these were separated by many degrees of connection from the bridge to the settler portion of the congregation.  The Kenderago-Canostens subcommunity was most distantly connected to the settler portion of the congregation, and was mainly composed of Wolf and Bear clan members.  This may reflect clan engagement with settler communities broadly.  William Johnson had a long-standing connection to the Mohawk Turtle clan through Molly and Joseph Brant's stepfather Brant Kanagaradunka,<label for="fn47" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn47" class="margin-toggle"><span class="sidenote">O’Toole, 105, 121-124, 172, 334, Sivertsen, 127-142, 163-171; Leavey, Molly Brant, 23. <a class="badge badge-secondary" href="#fullnote-47">full note</a></span> while the most prominent member of the Kenderago-Canostens subcommunity, Abraham Canostens Peterse, once accused William Johnson of disguising a plot in which the French and English conspired to kill all Mohawks.  The separation of the Kenderago-Canostens subcommunity may also have been denominational.  By 1751, Abraham was a lay preacher and appointed an Anglican Reader, as well as a noted follower of New Light preacher Jonathan Edwards sometimes at odds with the High Anglican aligned Barclay.<label for="fn48" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn48" class="margin-toggle"><span class="sidenote">SWJP, 9:52-54 and 62; DRCHNY, 6:589-590; Sivertsen 144-149.</span>  The relative distance of Wolf clan members from the settler portion of the congregation may reflect matrilineal clan approaches to engaging settler communities, religious divisions within the Iroquois community or differences with Barclay, or patterns of clan intermarriage.</p>
             <p id="p17">Women's clan affiliations in the Fort Hunter network are difficult to determine.  Most of the individuals in this network whose clans are known are men, because they appeared more frequently in recorded interactions with Europeans and European recording practices preferentially documented men's biographical details and patrilineages.  Many of the women do not appear in other archival records, or appear so rarely that it is difficult to build a concrete picture of their roles in their communities despite what is known of Iroquois women’s roles in governance and matrilineages.<label for="fn49" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn49" class="margin-toggle"><span class="sidenote">Kane, 89-144.</span>  Iroquois men additionally appear much more influential than Iroquois women as measured by their betweenness centrality in large part because the calculation of betweenness as measured throughout the network privileges those individuals who had a connection to the narrow bridge between the settler and Iroquois portions of the congregation.  By this measure, the most influential individuals in the network were Anna Clement and Esras Teganderasse, occasional preacher and schoolteacher, and son of Canasteje.</p>
           </div>
-          
+
           <div id="viz-block-3" class="viz-block col-12" role="img" aria-label="[title]">
               <title>Network visualization of only Iroquois members of the Fort Hunter congregation.</title>
               <div class="form-row">
@@ -189,7 +190,7 @@
                     <option value="role">Role</option>
                   </select>
                 </div>
-              
+
                 <div class="col">
                   <select id="node-size-3" class="form-control">
                     <option value="betweenness">Network influence</option>
@@ -197,15 +198,15 @@
                   </select>
                 </div>
               </div>
-              
+
               <div class="form-group">
               <label for="selected-year-3">Year: </label><input type="range" name="year" class="slider form-control" id="selected-year-3" value="1745" min="1734" max="1745" >
               <span class="slider_label-3 h5"></span>
               </div>
-            
-              <div class="viz" id="viz-3"></div>  
+
+              <div class="viz" id="viz-3"></div>
             </div>
-          
+
           <div class="essay-block col-sm-12 col-md-10">
             <p id="p18">As measured by her betweenness, Canasteje herself appears as rather uninfluential in the network, even though she was one of the earliest Iroquois members of the Dutch Reformed Church and sponsored more baptisms than did her son Esras.<label for="fn50" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn50" class="margin-toggle"><span class="sidenote">Sivertsen, 26.</span>  As measured by the number of connections to others rather than betweenness, Iroquois women appear much more prominent in the network, on par with men’s prominence.  Additionally, if betweenness centrality is calculated separately on the Iroquois and settler portions of the network, Iroquois and settler women appear much more influential internally within their respective portions of the congregation.  Although Anna Clement’s prominence as an intercultural connector complicates the story of the male intercultural mediator, an emphasis on intercultural connection nevertheless elides the influence of both Native and settler women within their own communities.</p>
             <p id="p19">Despite their similarities as measured by internal connections, Iroquois and settler women differed significantly in their structural roles within their portions of the congregation.  In the Scots-Irish, Dutch, and Dutch-English subcommunities, connections were mostly heterogeneous, with men and women having balanced numbers of connections with both men and women, while in the Palatine subcommunity, individuals’ connections were more homogeneous with members of their own gender.  Connections between all settler subcommunities were also almost all between men; a few settler women like Engeltie Hansen, Mary Quackenbus, and Cornelia Bowen had connections across subcommunities, perhaps as a result of intermarriage, but these were the exception.  Iroquois connections across all subcommunities were mainly heterogeneous, but women were the main connectors between subcommunities.  Men’s influence as measured by betweenness derived from their role as hubs of subcommunities, while women more often connected subcommunities or otherwise unconnected clusters within subcommunities.  Elizabeth Anoghsookte, Elizabeth Teganderasse, and Lydia Kaweghnoke all acted as anchors who connected the Bridge subcommunity to the main body of the Iroquois portion of the congregation, while Jacamine Kaghtereni, Margaret Oseragighte, Canasteje, Christina Brant’s wife, Catherine Kiliane’s wife, Catharine Tewajewasha, Margaret Kinsiago, Margaret Jughahise, Gesina Canostens, Ester Kenderago, and Mary Serehowane all connected the main subcommunities or smaller internal clusters.<label for="fn51" class="margin-toggle sidenote-number"></label><input type="checkbox" id="fn51" class="margin-toggle"><span class="sidenote">On Iroquois women's roles in their communities and the importance of matrilineages, see Mann, Iroquoian Women, 165-70; Brown, "Economic Organization and the Position of Women among the Iroquois"; Tooker, "Women in Iroquois Society"; Shoemaker, "The Rise or Fall of Iroquois Women," 303. <a class="badge badge-secondary" href="#fullnote-51">full note</a></span>  Iroquois men also connected subcommunities, but women much more frequently did so, suggesting that although the network was documented within the framework of Anglican baptismal sponsorship and kinship paradigms, the relationships it recorded reflected Iroquois matrilineal frameworks of kin and community.</p>
@@ -216,7 +217,7 @@
             <p id="p21">Social network analysis of the Fort Hunter baptismal network complicates the picture of the male intercultural mediator, and suggests that Iroquois women used Anglican baptism to reinforce inter-clan connections.  Even within a single congregation, settler ethnic groups used the practice of baptismal sponsorship to define ethnic community boundaries, while the Iroquois portion of the congregation mediated their contact with the settler community through a sparsely documented Dutch woman, Anna Clement.  Clement’s prominence in the fictive kinship context of intercultural baptismal ties suggests that male go-betweens like Michael Montour and William Johnson who are documented through the archive of the diplomatic encounter were not the only intercultural mediators, and in fact may have been relatively uninfluential in the daily contact that produced fictive kinship ties of baptismal sponsorship.  Iroquois subcommunities fell along clan rather than ethnic lines, suggesting that even within a single national community like the Mohawk village of Tiononderoge, matrilineal clans approached engagement with settler communities with different goals.  Iroquois women acted as bridges between these subcommunities, suggesting that Mohawk and European women as well as men acted as mediators between communities.</p>
           </div>
         </div>
-      
+
   </div>
 
   <div class="container">
@@ -226,10 +227,10 @@
     <hr>
     <h6 class="text-muted">This project was produced using <a href="https://gephi.org/">Gephi</a> for analysis and <a href="https://d3js.org/">D3.js</a>, <a href="http://d3-legend.susielu.com/">d3-legend by Susie Lu</a>, and <a href="https://introjs.com/">intro.js</a> for presentation.  Thanks also to Amy Kohout, Mari Crabtree, Nicole Maskiell, Cristina Florea, Sami Schalk, Jess Waggoner, and Jim Mallek for their feedback on improving the visualization for this project.</h6>
     </div>
-  
+
   <h5><a href="full.html" target="_blank">View a full-page version of the network</a></h5>
   </div>
-  
+
   <div class="container">
     <div class="col">
       <footnotes>
