@@ -96,7 +96,7 @@ function drawNetwork() {
   var height = parentDiv.clientHeight;
 
 
-  var svg = d3.select("#viz-1")
+  networkChart['vis'] = d3.select("#viz-1")
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", "0 0 " + width + " " + height)
@@ -108,7 +108,7 @@ function drawNetwork() {
 
   networkChart.force = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) {
-      return networkChart['links'].name;
+      return d.name
     }).strength(1))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(w / 2, h / 2))
@@ -116,7 +116,7 @@ function drawNetwork() {
       return (d.betweenesscentrality_1745 * 150 + d.degree_1745) / 2 + 15
     }));
 
-  var link = svg.append("g")
+  var link = networkChart['vis'].append("g")
     .attr("class", "links")
     .selectAll("line")
     .data(networkChart.links)
@@ -124,7 +124,7 @@ function drawNetwork() {
     .append("line");
   //.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-  var node = svg.selectAll("circle")
+  var node = networkChart['vis'].selectAll("circle")
     .data(networkChart.nodes)
     .enter().append("circle")
     .attr("id", function(d) {
@@ -153,9 +153,7 @@ function drawNetwork() {
       .on("end", dragended))
     .on('dblclick', connectedNodes);
 
-  networkChart['vis'] = svg;
-
-  var text = svg.selectAll("text")
+  var text = networkChart['vis'].selectAll("text")
     .data(node)
     .enter()
     .append("text");
@@ -200,43 +198,44 @@ function drawNetwork() {
       .attr("cy", function(d) {
         return d.y;
       });
-  }
 
 
-  // mouse double click highlight is taken from this example:
-  // http://www.coppelia.io/2014/06/finding-neighbours-in-a-d3-force-directed-layout-2/
-  // we need to create an array of "connections" for quick lookup
-  var linkedByIndex = {};
-  for (i = 0; i < networkChart.nodes.length; i++) {
-    linkedByIndex[i + "," + i] = 1;
-  };
 
-  // Loop over each "link" and determine if they are connectioned
-  networkChart.links.forEach(function(d) {
-    linkedByIndex[d.source.index + "," + d.target.index] = 1;
-  });
+    // mouse double click highlight is taken from this example:
+    // http://www.coppelia.io/2014/06/finding-neighbours-in-a-d3-force-directed-layout-2/
+    // we need to create an array of "connections" for quick lookup
+    var linkedByIndex = {};
+    for (i = 0; i < networkChart.nodes.length; i++) {
+      linkedByIndex[i + "," + i] = 1;
+    };
 
-  // define a "lookup" function to get connections
-  function neighboring(a, b) {
-    return linkedByIndex[a.index + "," + b.index];
-  };
-  links = d3.selectAll('line');
+    // Loop over each "link" and determine if they are connectioned
+    networkChart.links.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+    });
 
-  // set opacity based on connections
-  function connectedNodes() {
-    if (toggle == 0) {
-      // select the nodes
-      d = d3.select(this).node().__data__;
-      // loop over each node and style
-      node.style("opacity", function(o) {
-        // ? is a conditional operator of the form condition ? value-if-true : value-if-false
-        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.15;
-      });
-      toggle = 1;
-    } else {
-      node.style("opacity", 1);;
-      toggle = 0;
-    }
+    // define a "lookup" function to get connections
+    function neighboring(a, b) {
+      return linkedByIndex[a.index + "," + b.index];
+    };
+    links = d3.selectAll('line');
+
+    // set opacity based on connections
+    function connectedNodes() {
+      if (toggle == 0) {
+        // select the nodes
+        d = d3.select(this).node().__data__;
+        // loop over each node and style
+        node.style("opacity", function(o) {
+          // ? is a conditional operator of the form condition ? value-if-true : value-if-false
+          return neighboring(d, o) | neighboring(o, d) ? 1 : 0.15;
+        });
+        toggle = 1;
+      } else {
+        node.style("opacity", 1);;
+        toggle = 0;
+      }
+    };
   };
 };
 
